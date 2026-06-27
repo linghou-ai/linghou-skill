@@ -1,93 +1,85 @@
 ---
 name: linghou-skill
-description: "Use this for Linghou browser automation infrastructure work: AI or CLI control of a user's real browser, local Native Messaging, remote realtime WebSocket execution, lhcli workflows, Market script governance, scriptCode vs commandSlug decisions, and protocol drift across linghou, linghou-realtime, lhcli, and shared docs. Trigger whenever the user asks to debug, implement, review, document, or operate Linghou browser control or reusable browser scripts."
+description: "用于 Linghou 浏览器自动化基础设施工作：AI 或 CLI 操作用户真实浏览器、本地 Native Messaging、远程 realtime WebSocket 执行、lhcli 工作流、Market 脚本治理、scriptCode 与 commandSlug 的取舍，以及 linghou、linghou-realtime、lhcli 和共享文档之间的协议漂移。只要用户要求调试、实现、审查、记录或操作 Linghou 浏览器控制和可复用浏览器脚本，就使用这个 skill。"
 ---
 
 # linghou-skill
 
-Use this skill to keep Linghou browser automation work aligned across the
-browser extension, CLI, realtime service, Market, and coordination docs.
+使用这个 skill 时，要让 Linghou 浏览器自动化相关工作在浏览器插件、CLI、
+realtime 服务、Market 和协调文档之间保持一致。
 
-Linghou's core product boundary is:
+Linghou 的核心产品边界是：
 
-> AI, CLI, and automation tools should be able to operate the user's real
-> browser in a stable and safe way, while reusable browser scripts become
-> manageable, discoverable, reviewable assets.
+> AI、CLI 和自动化工具可以稳定、安全地操作用户真实浏览器，同时把可复用
+> 浏览器脚本沉淀为可管理、可发现、可审核的资产。
 
-## Start Here
+## 先做这些
 
-1. Identify the workspace and current task type:
-   - local browser control through Native Messaging
-   - remote browser control through realtime WebSocket
-   - CLI login, host install, browser listing, or execution
-   - script publication, update, discovery, review, or execution
-   - protocol/schema/field/route/auth drift across projects
-2. If the task is in the Linghou monorepo/workspace, read the current source of
-   truth before changing code:
+1. 先判断当前工作区和任务类型：
+   - 通过 Native Messaging 做本地浏览器控制
+   - 通过 realtime WebSocket 做远程浏览器控制
+   - CLI 登录、host 安装、浏览器列表或执行
+   - 脚本发布、更新、发现、审核或执行
+   - 跨项目协议、schema、字段、路由或鉴权漂移
+2. 如果任务发生在 Linghou monorepo/workspace 中，改代码前先读当前事实来源：
    - `docs/coordination/COORDINATION-CONTRACT.md`
    - `docs/protocols-and-shared-types.md`
    - `docs/architecture.md`
-3. Inspect the relevant implementation owners:
-   - `linghou/packages/extension` for browser-side execution
-   - `lhcli` for CLI and Native Messaging host behavior
-   - `linghou-realtime` for HTTP, MCP, WebSocket, task dispatch, and browser state
-   - `linghou/packages/market` for auth, tokens, scripts, public plaza, and admin review
-   - `linghou/packages/shared` for TypeScript protocols, entities, schema, constants
-4. Keep docs and code synchronized. Any protocol, route, auth, schema, secret,
-   field naming, or shared-type change should update the coordination docs.
+3. 检查相关实现归属：
+   - `linghou/packages/extension` 负责浏览器侧执行
+   - `lhcli` 负责 CLI 和 Native Messaging host 行为
+   - `linghou-realtime` 负责 HTTP、MCP、WebSocket、任务调度和浏览器状态
+   - `linghou/packages/market` 负责鉴权、token、脚本、公开广场和后台审核
+   - `linghou/packages/shared` 负责 TypeScript 协议、实体、schema 和常量
+4. 保持文档和代码同步。任何协议、路由、鉴权、schema、secret、字段命名
+   或共享类型变更，都应同步更新协调文档。
 
-## Core Decisions
+## 核心判断
 
-Choose the execution path explicitly.
+要明确选择执行路径。
 
-- Use `scriptCode` for one-off dynamic automation. It is raw source forwarded to
-  the browser-side executor and should not be described as governed or audited.
-- Use `commandSlug` for reusable scripts. It must resolve through Market and
-  carry `scriptPolicy` so visibility, versioning, URL policy, capabilities,
-  review status, and revocation stay enforceable.
-- Use `loc-*` targets for local Native Messaging / local IPC paths.
-- Use `rem-*` targets for remote realtime WebSocket paths.
+- 一次性动态自动化使用 `scriptCode`。它是直接转发给浏览器侧执行器的原始
+  源码，不要把它描述成受治理或已审计的脚本。
+- 可复用脚本使用 `commandSlug`。它必须通过 Market resolve，并携带
+  `scriptPolicy`，这样可见性、版本、URL 策略、capability、审核状态和撤销
+  状态才可执行。
+- `loc-*` 目标走本地 Native Messaging / 本地 IPC。
+- `rem-*` 目标走远程 realtime WebSocket。
 
-Do not mix these concepts casually. Most Linghou regressions come from treating
-a local browser ID like a remote browser ID, treating a governed script like raw
-source, or changing one side of a shared protocol without the other projects.
+不要随意混用这些概念。Linghou 的很多回归都来自把本地 browser ID 当成远程
+browser ID、把受治理脚本当成裸源码，或只修改共享协议的一侧实现。
 
-## Reference Routing
+## 参考文件路由
 
-Read only the references needed for the task:
+只读取当前任务需要的参考文件：
 
-- For topology, component ownership, field naming, and contract invariants, read
-  `references/architecture-contract.md`.
-- For concrete CLI flows and command intent, read `references/cli-workflows.md`.
-- For safety, governance, and review boundaries, read
-  `references/safety-and-governance.md`.
+- 拓扑、组件归属、字段命名和契约不变量：读
+  `references/architecture-contract.md`。
+- CLI 具体流程和命令意图：读 `references/cli-workflows.md`。
+- 安全、治理和审核边界：读 `references/safety-and-governance.md`。
 
-## Working Rules
+## 工作规则
 
-- Prefer the current coordination docs and shared types over inferred behavior.
-- Check all affected submodules before claiming a cross-project behavior is
-  fixed.
-- Preserve the distinction between Market-owned identity/script governance and
-  realtime-owned browser dispatch/state.
-- When debugging connection failures, gather evidence from the exact path:
-  extension storage/logs, Native Messaging host or WebSocket handshake, token
-  scope/version, browser ID prefix/signature, and realtime/Market routes.
-- When adding reusable automation, make it a `commandSlug` script and route it
-  through CLI/Market governance instead of hiding it in ad hoc `scriptCode`.
-- When changing protocol semantics, update tests and docs in the same change.
+- 优先相信当前协调文档和共享类型，不要根据单个实现猜测协议。
+- 声称跨项目行为已修复前，要检查所有受影响子模块。
+- 保持 Market 负责身份和脚本治理、realtime 负责浏览器调度和状态的边界。
+- 调试连接失败时，沿实际路径取证：插件存储和日志、Native Messaging host
+  或 WebSocket 握手、token scope/version、browser ID 前缀/签名，以及
+  realtime/Market 路由。
+- 添加可复用自动化时，把它做成 `commandSlug` 脚本并走 CLI/Market 治理，
+  不要藏在临时 `scriptCode` 里。
+- 修改协议语义时，同一次变更里更新测试和文档。
 
-## Verification
+## 验证
 
-Select verification based on the files touched:
+按改动范围选择验证方式：
 
-- shared protocol/schema changes: run shared package tests/typecheck
-- realtime execution or WebSocket changes: run realtime tests and direct health
-  or exec checks
-- CLI/Native Messaging changes: run Rust tests and relevant `lh` command flows
-- Market auth/script changes: run Market tests/build and exercise the affected
-  route or page
-- cross-project behavior: verify at least one end-to-end path, not only isolated
-  unit tests
+- 共享协议或 schema 改动：运行 shared 包测试和 typecheck
+- realtime 执行或 WebSocket 改动：运行 realtime 测试，并做直接 health 或
+  exec 检查
+- CLI/Native Messaging 改动：运行 Rust 测试和相关 `lh` 命令流程
+- Market 鉴权或脚本改动：运行 Market 测试/build，并实际访问受影响路由或页面
+- 跨项目行为：至少验证一条端到端路径，不要只依赖孤立单元测试
 
-If the user asks for production deployment or live behavior, local green is not
-enough. Verify the live deployment path and report the exact checks performed.
+如果用户要求生产部署或线上行为，本地通过不够。要验证真实部署路径，并报告
+具体执行过的检查。

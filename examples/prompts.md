@@ -1,6 +1,6 @@
-# Example Prompts
+# 示例 Prompt
 
-Use these prompts to sanity-check the skill.
+用这些 prompt 对 skill 做快速可用性检查。
 
 1. "本地 Chrome 插件点连接后连不上，帮我查 Local Native Messaging、lhcli 和 loc-* browserId 这条链路。"
 
