@@ -2,10 +2,10 @@
 
 用这些 prompt 对 skill 做快速可用性检查。
 
-1. "本地 Chrome 插件点连接后连不上，帮我查 Local Native Messaging、lhcli 和 loc-* browserId 这条链路。"
+1. "lh 登录后怎么查看当前账号和浏览器列表？"
 
-2. "我要把这个临时脚本变成可复用的 Linghou 市集脚本，CLI 怎么发布和用 commandSlug 执行？"
+2. "Linghou 整个系统支持哪些操作浏览器的方法？把具体 lh 命令和 MCP 调用都列出来。"
 
-3. "检查 linghou、linghou-realtime、lhcli 三个子模块之间关于 scriptCode / commandSlug 的协议有没有漂移，文档也要对齐。"
+3. "用 lh exec 执行一段 JS，scriptCode、script-file 和 commandSlug 怎么选？"
 
-4. "远程 rem-* 浏览器在线但是 exec 失败，帮我判断是 token、BROWSER_ID_SECRET、WebSocket 还是 Market resolve 的问题。"
+4. "MCP 调 browser_execute_command 要传哪些参数？给我对应的 lh 命令。"
