@@ -57,6 +57,33 @@ lh exec --browser-id <browser-id> --tab-id <tab-id> --params '{"selector":"butto
 
 如果命令不需要 tab 或参数，可以省略 `--tab-id` 或 `--params`。
 
+## 方法 1.1：执行 CDP 命令
+
+CDP 有顶级子命令，优先使用：
+
+```bash
+lh cdp execute --browser-id <browser-id> --tab-id <tab-id> Runtime.evaluate \
+  --params '{"expression":"document.title","returnByValue":true}'
+```
+
+查看当前 CDP 会话：
+
+```bash
+lh cdp sessions --browser-id <browser-id>
+```
+
+断开指定标签页的 CDP 会话：
+
+```bash
+lh cdp detach --browser-id <browser-id> --tab-id <tab-id>
+```
+
+说明：
+
+- `lh cdp execute` 的 `<method>` 是 CDP method，例如 `Runtime.evaluate`、`Page.captureScreenshot`。
+- `--params` 只写 CDP method 自己的参数；`tabId` 由 `--tab-id` 提供。
+- 底层仍等价于 `lh exec ... cdp_execute`，只是不用手写 `{"tabId":...,"method":...}` 包装 JSON。
+
 ## 方法 2：执行一次性 JS 源码
 
 执行临时脚本：

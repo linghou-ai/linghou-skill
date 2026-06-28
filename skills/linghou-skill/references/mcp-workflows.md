@@ -137,6 +137,9 @@ lh exec --browser-id <browser-id> --tab-id <tab-id> --params '{"selector":"butto
 | `lh exec ... --script-file ... evaluate` | 读取文件后填入 `scriptCode` |
 | `lh exec ... --command-slug ... evaluate` | `command: "evaluate"` + `commandSlug` |
 | `lh exec ... --params '<json>' <command>` | `command` + `params` |
+| `lh cdp execute ... <method> --params '<json>'` | `command: "cdp_execute"` + `params: {"tabId":N,"method":"<method>","params":{...}}` |
+| `lh cdp sessions ...` | `command: "cdp_get_sessions"` |
+| `lh cdp detach ... --tab-id N` | `command: "cdp_detach"` + `params: {"tabId":N}` |
 | `lh exec --operation-id ...` | 传入同一个 `operation_id` |
 
 如果用户在问 MCP，只说明 MCP 工具名、参数形状、鉴权方式、`lh` 等价命令和
