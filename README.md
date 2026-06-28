@@ -6,6 +6,11 @@
 这个仓库按 `skills` CLI 可识别的结构组织，包含一个可安装的 skill：
 `skills/linghou-skill/SKILL.md`。
 
+## 开源许可
+
+本仓库是开源仓库，使用 MIT License。你可以直接从 GitHub 安装、查看和复用
+skill 内容。
+
 ## 安装
 
 查看仓库中可用的 skill：
@@ -25,8 +30,6 @@ npx skills add linghou-ai/linghou-skill --skill linghou-skill
 ```bash
 npx skills add linghou-ai/linghou-skill --skill linghou-skill --agent codex
 ```
-
-如果仓库是私有仓库，请在已有 GitHub clone 权限的机器上执行这些命令。
 
 ## 适用范围
 
