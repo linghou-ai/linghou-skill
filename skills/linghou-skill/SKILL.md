@@ -1,6 +1,6 @@
 ---
 name: linghou-skill
-description: "用于说明 Linghou 系统支持哪些操作浏览器的方法，并给出具体 `lh` 命令和 MCP 调用。只要用户询问 `lh` CLI、浏览器列表、登录、install-host、exec、evaluate、scriptCode、script-file、commandSlug、script 管理、MCP `/tools/call` 或 `browser_execute_command` 参数，就使用这个 skill。范围只限浏览器操作方法、命令和 MCP 参数。"
+description: "用于说明 Linghou 系统支持哪些操作浏览器的方法，并给出具体 `lh` 命令和 MCP 调用。只要用户询问 `lh` CLI、浏览器列表、登录、install-host、exec、evaluate、scriptCode、script-file、commandSlug、script 管理、把网页操作脚本添加/保存/发布到 Linghou 市集、MCP `/tools/call` 或 `browser_execute_command` 参数，就使用这个 skill。范围只限浏览器操作方法、脚本保存发布规则、命令和 MCP 参数。"
 ---
 
 # linghou-skill
@@ -9,6 +9,7 @@ description: "用于说明 Linghou 系统支持哪些操作浏览器的方法，
 
 - 用 `lh` 命令行操作浏览器
 - 用 MCP 的 `browser_execute_command` 操作浏览器
+- 用 `lh script` 把网页操作脚本保存、更新、公开到 Linghou 市集
 
 除非用户明确要求排查实现，否则把回答保持在 CLI/MCP 的用户操作层。
 
@@ -61,6 +62,13 @@ lh script create --name "Collect title" --slug collect-title --code 'return docu
 lh exec --browser-id <browser-id> --tab-id <tab-id> --command-slug collect-title evaluate
 ```
 
+保存到市集的公开脚本要遵守发布口径：
+
+- 不要在 slug、名称、描述、分类、标签或源码注释中出现不应展示的第三方项目名或来源名。
+- `description` 支持 Markdown，把它当成给用户/agent 的提示词，写清用途、执行前提、参数、返回值和示例。
+- `category` 按网站/平台分类；同一个网站的多个脚本使用同一个网站分类。
+- `tags` 使用中文，表达动作、内容类型或场景。
+
 ### 5. 用 MCP 操作浏览器
 
 ```bash
@@ -93,6 +101,7 @@ MCP arguments 与 `lh exec` 对应：
 只读取当前任务需要的参考文件：
 
 - `lh` 命令行：读 `references/cli-workflows.md`。
+- 添加、保存、发布市集脚本：读 `references/add-scripts.md`。
 - MCP 工具调用：读 `references/mcp-workflows.md`。
 
 ## 工作规则
@@ -102,6 +111,7 @@ MCP arguments 与 `lh exec` 对应：
 - 区分 `scriptCode` 和 `commandSlug`，只说明使用差异和命令写法。
 - 解释 MCP 时，把字段和 `lh` 命令逐项对应。
 - `lh exec` 的 `<command>` 在命令末尾，例如 `... evaluate`。
+- 发布脚本时，先检查公开字段是否干净、分类是否按网站、标签是否中文。
 - 如果命令可能随实现变化，先用 `lh --help` 或源码确认。
 
 ## 验证

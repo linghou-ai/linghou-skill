@@ -95,6 +95,10 @@ lh script toggle --slug collect-page-title
 lh script delete --slug collect-page-title
 ```
 
+如果用户要把网页操作脚本添加到平台或公开到市场，先读
+`references/add-scripts.md`。公开脚本的 `description` 要写成 Markdown 使用说明；
+`category` 按网站/平台分类；`tags` 使用中文；不要在公开字段或源码注释中出现不应展示的第三方项目名或来源名。
+
 按 slug 执行：
 
 ```bash

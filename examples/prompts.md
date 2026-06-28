@@ -9,3 +9,5 @@
 3. "用 lh exec 执行一段 JS，scriptCode、script-file 和 commandSlug 怎么选？"
 
 4. "MCP 调 browser_execute_command 要传哪些参数？给我对应的 lh 命令。"
+
+5. "把这个网页操作脚本保存到我的 Linghou 平台并公开，description 里写清楚参数和用法。"

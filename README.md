@@ -40,9 +40,10 @@ npx skills add linghou-ai/linghou-skill --skill linghou-skill --agent codex
 - `lh exec ... evaluate`、`scriptCode`、`script-file`、`commandSlug`
 - `lh exec ... --params '<json>' <command>`
 - `lh script create|update|info|list|search|toggle|delete`
+- 把网页操作脚本添加、保存、更新、公开到 Linghou 市集
 - MCP `/tools/call` 和 `browser_execute_command` 参数
 
-这个 skill 只覆盖浏览器操作方法、命令和 MCP 参数。
+这个 skill 只覆盖浏览器操作方法、脚本保存发布规则、命令和 MCP 参数。
 
 ## 仓库结构
 
@@ -51,6 +52,7 @@ skills/
   linghou-skill/
     SKILL.md
     references/
+      add-scripts.md
       cli-workflows.md
       mcp-workflows.md
 examples/
