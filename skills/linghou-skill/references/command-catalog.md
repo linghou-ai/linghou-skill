@@ -6,6 +6,8 @@
 
 `tabs_list`、`tabs_close`、`tabs_create`、`get_all_tabs`、`get_active_tab`、`create_tab`、`close_tab`、`update_tab`、`go_back`、`go_forward`、`reload`、`capture_screenshot`、`get_page_markdown_with_iframes`、`get_page_html_with_iframes`
 
+`tabs_list` 返回每个 tab 的 `frames` 数组，用于为 content 命令选择 `frameId` 或 `frameUrl`。不要为 frame 发现猜测或新增命令。
+
 ## Content：页面交互与查询
 
 `snapshot`、`click`、`input`、`hover`、`scroll`、`select`、`check`、`uncheck`、`focus`、`blur`、`drag_and_drop`、`upload_file`、`right_click`、`double_click`、`press_key`、`keyboard_shortcut`、`clear_input`、`mouse_move`、`mouse_down`、`mouse_up`、`mouse_wheel`

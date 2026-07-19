@@ -145,6 +145,8 @@ lh exec --browser-id <browser-id> --tab-id <tab-id> --params '{"selector":"butto
 | `lh exec ... --script-file ... evaluate` | 读取文件后填入 `scriptCode` |
 | `lh exec ... --command-slug ... evaluate` | `command: "evaluate"` + `commandSlug` |
 | `lh exec ... --params '<json>' <command>` | `command` + `params` |
+| `lh exec ... --frame-id N <command>` | `frameId: N` |
+| `lh exec ... --frame-url '<glob>' <command>` | `frameUrl: "<glob>"` |
 | `lh cdp execute ... <method> --params '<json>'` | `command: "cdp_execute"` + `params: {"tabId":N,"method":"<method>","params":{...}}` |
 | `lh cdp sessions ...` | `command: "cdp_get_sessions"` |
 | `lh cdp detach ... --tab-id N` | `command: "cdp_detach"` + `params: {"tabId":N}` |
@@ -160,4 +162,5 @@ lh exec --browser-id <browser-id> --tab-id <tab-id> --params '{"selector":"butto
 3. 确认 `browser_ids` 来自当前可用浏览器列表。
 4. 确认 `operation_id` 是 UUID。
 5. 确认 `scriptCode` 和 `commandSlug` 没有同时出现。
-6. 根据 `results[].error.code` 判断是离线、鉴权、参数还是浏览器执行失败。
+6. 指定 iframe 时，从 `tabs_list` 的 `tabs[].frames[]` 获取 ID/URL；自动化优先使用 `frameUrl`。
+7. 根据 `results[].error.code` 判断是离线、鉴权、参数还是浏览器执行失败。

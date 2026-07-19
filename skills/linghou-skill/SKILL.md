@@ -34,6 +34,12 @@ lh exec --browser-id <browser-id> tabs_list
 lh exec --browser-id <browser-id> --tab-id <tab-id> get_page_markdown_with_iframes
 ```
 
+`tabs_list` 的 `tabs[].frames[]` 会返回当前 `frameId`、`parentFrameId` 和 URL。需要在 iframe 中执行 content 命令时，优先使用可跨刷新重新解析的 `--frame-url`：
+
+```bash
+lh exec --browser-id <browser-id> --tab-id <tab-id> --frame-url '*://*.example.com/*' snapshot
+```
+
 ### 点击、输入或填写表单
 
 ```bash
@@ -85,6 +91,12 @@ lh exec --browser-id <browser-id> --tab-id <tab-id> --script-code 'return docume
 lh exec --browser-id <browser-id> --tab-id <tab-id> --script-file ./task.js evaluate
 ```
 
+在 iframe 主世界执行：
+
+```bash
+lh exec --browser-id <browser-id> --tab-id <tab-id> --frame-url '*://*.example.com/*' --script-file ./task.js evaluate
+```
+
 ### 4. 用 `lh script` 保存脚本，再用 `commandSlug` 执行
 
 ```bash
@@ -116,6 +128,7 @@ MCP arguments 与 `lh exec` 对应：
   "browser_ids": ["<browser-id>"],
   "command": "evaluate",
   "tabId": 123,
+  "frameUrl": "*://*.example.com/*",
   "scriptCode": "return document.title"
 }
 ```
@@ -142,6 +155,7 @@ MCP arguments 与 `lh exec` 对应：
 - 需要占位值时，用 `<browser-id>`、`<tab-id>`、`<slug>`、`<token>`。
 - 阅读优先 `get_page_markdown_with_iframes`；交互前先 `snapshot`，再优先使用 Ref。
 - 不要把 tab ID 同时放进 `--tab-id` 和 `--params`。
+- iframe ID 来自 `tabs_list` 的 `tabs[].frames[]`；`frameId` 在刷新后可能变化，稳定自动化优先使用 `frameUrl`。
 - 页面刷新、跳转或显著更新后，重新获取 snapshot；旧 Ref 可能失效。
 - 区分 `scriptCode` 和 `commandSlug`，只说明使用差异和命令写法。
 - 解释 MCP 时，把字段和 `lh` 命令逐项对应。

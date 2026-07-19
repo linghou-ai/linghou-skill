@@ -132,6 +132,21 @@ lh exec --browser-id <browser-id> --tab-id <tab-id> --script-file ./task.js eval
 - `--script-file` 读取本地文件内容。
 - 文件内容会作为一次性脚本执行。
 
+## 在 iframe 中执行
+
+先查看 `tabs_list` 返回的 `tabs[].frames[]`，再用 frame ID 或 URL pattern 选择目标：
+
+```bash
+lh exec --browser-id <browser-id> tabs_list
+lh exec --browser-id <browser-id> --tab-id <tab-id> --frame-id <frame-id> snapshot
+lh exec --browser-id <browser-id> --tab-id <tab-id> --frame-url '*://*.example.com/*' --script-file ./task.js evaluate
+```
+
+- `--frame-id` 是 Chrome 当前导航生命周期内的精确 ID，页面刷新后可能变化。
+- `--frame-url` 每次执行时重新匹配，必须唯一命中；稳定自动化优先使用它。
+- 两者同时提供时必须指向同一 frame。
+- 所有 content 命令支持 frame 选择器；worker、popup 和 CDP 命令不支持。
+
 ## 方法 4：保存脚本并通过 slug 执行
 
 保存脚本并按 slug 复用：
