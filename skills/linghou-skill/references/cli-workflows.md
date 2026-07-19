@@ -41,6 +41,29 @@ lh browsers forget <browser-id>
 - `loc-*`：本地浏览器目标
 - `rem-*`：远程浏览器目标
 
+## 先找目标 tab
+
+`lh browsers list` 只列出浏览器；要获取页面的 tab ID，执行浏览器内置命令：
+
+```bash
+lh exec --browser-id <browser-id> tabs_list
+```
+
+读取页面内容时优先 Markdown：
+
+```bash
+lh exec --browser-id <browser-id> --tab-id <tab-id> get_page_markdown_with_iframes
+```
+
+需要操作页面时，先生成 snapshot，再使用返回的 Ref：
+
+```bash
+lh exec --browser-id <browser-id> --tab-id <tab-id> snapshot
+lh exec --browser-id <browser-id> --tab-id <tab-id> --params '{"ref":"@e1"}' click
+```
+
+不要猜测命令；完整目录见 `command-catalog.md`。
+
 ## 方法 1：执行浏览器内置命令
 
 通用形状：
@@ -56,6 +79,7 @@ lh exec --browser-id <browser-id> --tab-id <tab-id> --params '{"selector":"butto
 ```
 
 如果命令不需要 tab 或参数，可以省略 `--tab-id` 或 `--params`。
+页面交互优先使用 snapshot 返回的 `ref`；CSS selector 只作为 Ref 不可用时的替代。
 
 ## 方法 1.1：执行 CDP 命令
 
@@ -152,6 +176,13 @@ lh exec --browser-id <browser-id> --tab-id <tab-id> --command-slug collect-page-
 2. `lh config set realtime-url <url>`
 3. `lh browsers list`
 4. 确认目标 `rem-*` 在线后重新执行 `lh exec ... evaluate`
+
+tab 或交互失败时：
+
+1. `lh exec --browser-id <browser-id> tabs_list`
+2. 确认 tab ID、URL 和页面是否可注入。
+3. 页面刷新、跳转或弹窗切换后重新 `snapshot`；不要复用旧 Ref。
+4. 连续两次超时或失败，停止重试并检查扩展连接状态。
 
 `commandSlug` 失败时：
 
